@@ -11,6 +11,8 @@ import com.back.back.model.Account;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Integer> {
+    Optional<Account> findById(Long accountId);
+    
     @Query(value = "select * from Account where username = :username", nativeQuery = true)
     Optional<Account> findAccountByUsername(@Param("username") String username);
 

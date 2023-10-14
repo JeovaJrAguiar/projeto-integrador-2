@@ -12,7 +12,7 @@ import com.back.back.model.Card;
 @Repository
 public interface CardRepository extends CrudRepository<Card, Integer>{
     @Query(value = "select * from card where cardNumber = :cardnumber", nativeQuery = true)
-    Optional<Card> findCardByNumber(@Param("cardnumber") Double cardnumber);
+    Optional<Card> findCardByNumber(@Param("cardnumber") Double cardNumber);
 
     @Query(value = "select * from card where accountid = :accountid", nativeQuery = true)
     Optional<Card> findCardByAccountId(@Param("accountid") Double accountId);
