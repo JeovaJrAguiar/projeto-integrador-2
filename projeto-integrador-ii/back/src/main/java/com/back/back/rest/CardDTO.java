@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 public class CardDTO {
     private Long id;
     private Double cardNumber;
-    private Double flag;
+    private Short flag;
     private Double dayClose;
     private Boolean isDebit;
     private Boolean isCredit;
@@ -19,7 +19,7 @@ public class CardDTO {
     
     public CardDTO() {
     }
-    public CardDTO(Long id, Double cardNumber, Double flag, Double dayClose, Boolean isDebit, Boolean isCredit,
+    public CardDTO(Long id, Double cardNumber, Short flag, Double dayClose, Boolean isDebit, Boolean isCredit,
             Double limit, Long account) {
         this.id = id;
         this.cardNumber = cardNumber;
@@ -32,7 +32,16 @@ public class CardDTO {
     }
 
     public static CardDTO fromCard(Card card) {
-        return new CardDTO(card.getId(), card.getCardNumber(), null, card.getDayClose(), card.getIsDebit(), card.getIsCredit(), card.getLimit(), null);
+        return new CardDTO(
+            card.getId(), 
+            card.getCardNumber(), 
+            card.getFlag(),
+            card.getDayClose(), 
+            card.getIsDebit(), 
+            card.getIsCredit(), 
+            card.getLimit(), 
+            card.getAccountId()
+        );
     }
 
     public Card toCard() {

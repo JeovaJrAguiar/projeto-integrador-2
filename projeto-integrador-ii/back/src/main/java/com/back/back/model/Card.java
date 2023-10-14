@@ -29,8 +29,9 @@ public class Card {
     public Card() {
     }
 
-    public Card(Long id, Double cardNumber, String flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Long account) {
-        // tratar a flat
+    public Card(Long id, Double cardNumber, String flagString, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Long account) {
+        short flagValue = FlagEnum.fromValueString(flagString);
+        FlagEnum flag = FlagEnum.fromValue(flagValue);
         // tratar o acconunt
         
         this.id = id;
@@ -67,8 +68,8 @@ public class Card {
     public void setCardNumber(Double cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public String getFlag() {
-        return this.flag.toString();
+    public Short getFlag() {
+        return this.flag.getValue();
     }
 
     public void setFlag(FlagEnum flag) {
@@ -110,6 +111,10 @@ public class Card {
     public Account getAccount() {
         return this.account;
     }
+    public Long getAccountId() {
+        return this.account.getId();
+    }
+
     public void setAccount(Account account) {
         this.account = account;
     }
