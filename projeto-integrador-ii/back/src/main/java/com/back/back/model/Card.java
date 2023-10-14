@@ -29,10 +29,11 @@ public class Card {
     public Card() {
     }
 
-    public Card(Long id, Double cardNumber, String flagString, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Long account) {
+    /*public Card(Long id, Double cardNumber, String flagString, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Long account) {
         short flagValue = FlagEnum.fromValueString(flagString);
         FlagEnum flag = FlagEnum.fromValue(flagValue);
         // tratar o acconunt
+        // nao foi tratado por conta que eu não preciso de um metodo em DTO que retorna um account
         
         this.id = id;
         this.cardNumber = cardNumber;
@@ -42,7 +43,7 @@ public class Card {
         this.isCredit = isCredit;
         this.limit = limit;
         this.account = account;
-    }
+    }*/
 
     public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Account account) {
         long millis = System.currentTimeMillis();  

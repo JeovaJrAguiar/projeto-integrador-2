@@ -8,21 +8,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.back.back.model.Card;
-import com.back.back.repository.CardRepository;
+import com.back.back.model.Transaction;
+import com.back.back.repository.TransactionRepository;
 
 @RestController
-@RequestMapping("/api/card")
-public class CardController {
+@RequestMapping("/api/transaction")
+public class TransacationController {
     @Autowired
-    CardRepository cardRepository;
+    TransactionRepository transacationRepostiory;
 
     @GetMapping("/{id}")
-    Optional<Card> getCardById(@PathVariable("id") Long id){
-        return cardRepository.findById(id);
+    Optional<Transaction> getTransacationById(@PathVariable("id") Long id){
+        return transacationRepostiory.findById(id);
     }
-    /*@GetMapping("/{id}")
-   Optional<Account> getAccountById(@PathVariable("id") Long id){
-    return accountRepository.findById(id);
-   }*/
 }

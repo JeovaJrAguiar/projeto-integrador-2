@@ -44,16 +44,6 @@ public class CardDTO {
         );
     }
 
-    public Card toCard() {
-        return new Card( 
-            this.username, 
-            this.mail, 
-            this.password, 
-            this.fullName, 
-            this.documentNumber,
-            this.address
-        );
-    }
 
     public Long getId() {
         return id;
@@ -67,10 +57,10 @@ public class CardDTO {
     public void setCardNumber(Double cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public Double getFlag() {
+    public Short getFlag() {
         return flag;
     }
-    public void setFlag(Double flag) {
+    public void setFlag(Short flag) {
         this.flag = flag;
     }
     public Double getDayClose() {
@@ -97,10 +87,10 @@ public class CardDTO {
     public void setLimit(Double limit) {
         this.limit = limit;
     }
-    public Double getAccount() {
+    public Long getAccount() {
         return account;
     }
-    public void setAccount(Double account) {
+    public void setAccount(Long account) {
         this.account = account;
     }
 }
