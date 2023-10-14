@@ -29,13 +29,31 @@ public class Account {
 
     public Account() {
     }
+    
+    public Account(String username, String mail, String password, String fullName, Double documentNumber,
+            String address) {
 
-    public Account(String username, String password, String fullName, Double documentNumber, String address,
+        long millis = System.currentTimeMillis();  
+        Date creationDate =new java.sql.Date(millis);
+
+        this.username = username;
+        this.mail = mail;
+        this.password = password;
+        this.fullName = fullName;
+        this.documentNumber = documentNumber;
+        this.address = address;
+        this.cards = null;
+        this.creationDate = creationDate;
+        this.deletionDate = null;
+    }
+
+    public Account(String username, String mail, String password, String fullName, Double documentNumber, String address,
             List<Card> cards) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);        
 
         this.username = username;
+        this.mail = mail;
         this.password = password;
         this.fullName = fullName;
         this.documentNumber = documentNumber;
@@ -46,11 +64,11 @@ public class Account {
     }
     
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
     public void setUsername(String username) {
         this.username = username;
@@ -64,35 +82,35 @@ public class Account {
     }
     
     public String getPassword() {
-        return password;
+        return this.password;
     }
     public void setPassword(String password) {
         this.password = password;
     }
     
     public String getFullName() {
-        return fullName;
+        return this.fullName;
     }
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
     
     public Double getDocumentNumber() {
-        return documentNumber;
+        return this.documentNumber;
     }
     public void setDocumentNumber(Double documentNumber) {
         this.documentNumber = documentNumber;
     }
     
     public String getAddress() {
-        return address;
+        return this.address;
     }
     public void setAddress(String address) {
         this.address = address;
     }
 
     public List<Card> getCards() {
-        return cards;
+        return this.cards;
     }
     public void addCard(Card card) {
         if (this.cards == null) {
@@ -106,10 +124,10 @@ public class Account {
     }
 
     public Date getCreationDate() {
-        return creationDate;
+        return this.creationDate;
     }
     public Date getDeletionDate() {
-        return deletionDate;
+        return this.deletionDate;
     }
     public void setDeletionDate() {
         long millis = System.currentTimeMillis();  

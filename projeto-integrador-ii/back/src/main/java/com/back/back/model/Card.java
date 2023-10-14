@@ -29,6 +29,20 @@ public class Card {
     public Card() {
     }
 
+    public Card(Long id, Double cardNumber, String flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Long account) {
+        // tratar a flat
+        // tratar o acconunt
+        
+        this.id = id;
+        this.cardNumber = cardNumber;
+        this.flag = flag;
+        this.dayClose = dayClose;
+        this.isDebit = isDebit;
+        this.isCredit = isCredit;
+        this.limit = limit;
+        this.account = account;
+    }
+
     public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Account account) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);  
