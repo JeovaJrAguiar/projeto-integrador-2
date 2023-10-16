@@ -20,9 +20,9 @@ public class Account {
     private String mail;
     private String password;
     private String fullName;
-    private Double documentNumber;
+    private Long documentNumber;
     private String address;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "account")
     private List<Card> cards;
     private Date creationDate;
     private Date deletionDate;
@@ -30,7 +30,7 @@ public class Account {
     public Account() {
     }
     
-    public Account(String username, String mail, String password, String fullName, Double documentNumber,
+    public Account(String username, String mail, String password, String fullName, Long documentNumber,
             String address) {
 
         long millis = System.currentTimeMillis();  
@@ -47,7 +47,7 @@ public class Account {
         this.deletionDate = null;
     }
 
-    public Account(String username, String mail, String password, String fullName, Double documentNumber, String address,
+    public Account(String username, String mail, String password, String fullName, Long documentNumber, String address,
             List<Card> cards) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);        
@@ -95,10 +95,10 @@ public class Account {
         this.fullName = fullName;
     }
     
-    public Double getDocumentNumber() {
+    public Long getDocumentNumber() {
         return this.documentNumber;
     }
-    public void setDocumentNumber(Double documentNumber) {
+    public void setDocumentNumber(Long documentNumber) {
         this.documentNumber = documentNumber;
     }
     

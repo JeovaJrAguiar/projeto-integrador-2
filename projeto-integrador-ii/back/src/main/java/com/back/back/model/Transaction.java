@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -21,15 +20,13 @@ public class Transaction {
     @OneToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToOne
-    private Double cardId; 
+    private Long cardId;
     private Date creationDate;
     private Date deletionDate;
     
-    
     public Transaction() {
     }
-    public Transaction(Double value, MethodEnum method, String description, Category category, Double cardId) {
+    public Transaction(Double value, MethodEnum method, String description, Category category, Long cardId) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);  
 
@@ -68,6 +65,13 @@ public class Transaction {
     }
     public void setCategory(Category category) {
         this.category = category;
+    }
+    
+    public Long getCardId() {
+        return cardId;
+    }
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
     }
     public Date getCreationDate() {
         return creationDate;

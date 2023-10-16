@@ -19,9 +19,9 @@ public class Card {
     private Double dayClose;
     private Boolean isDebit;
     private Boolean isCredit;
-    private Double limit;
+    private Double creditLimit;
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "cards")
     private Account account;
     private Date creationDate;
     private Date deletionDate;
@@ -45,7 +45,7 @@ public class Card {
         this.account = account;
     }*/
 
-    public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double limit, Account account) {
+    public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double creditLimit, Account account) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);  
 
@@ -53,7 +53,7 @@ public class Card {
         this.dayClose = dayClose;
         this.isDebit = isDebit;
         this.isCredit = isCredit;
-        this.limit = limit;
+        this.creditLimit = creditLimit;
         this.account = account;
         this.creationDate = creationDate;
         this.deletionDate = null;
@@ -85,12 +85,12 @@ public class Card {
         this.dayClose = dayClose;
     } 
 
-    public Double getLimit() {
-        return limit;
+    public Double getCreditLimit() {
+        return creditLimit;
     }
 
-    public void setLimit(Double limit) {
-        this.limit = limit;
+    public void setLimit(Double creditLimit) {
+        this.creditLimit = creditLimit;
     }
 
     public Boolean getIsCredit() {
