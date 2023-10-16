@@ -39,7 +39,7 @@ public class CardDTO {
             card.getDayClose(), 
             card.getIsDebit(), 
             card.getIsCredit(), 
-            card.getLimit(), 
+            card.getCreditLimit(), 
             card.getAccountId()
         );
     }

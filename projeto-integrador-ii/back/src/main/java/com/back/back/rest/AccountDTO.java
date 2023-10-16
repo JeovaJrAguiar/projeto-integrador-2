@@ -8,13 +8,23 @@ public class AccountDTO {
     private String password;
     private String fullName;
     private String mail;
-    private Double documentNumber;
+    private Long documentNumber;
     private String address;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String mail, String password, String username, String fullName, Double documentNumber, String address) {
+    public AccountDTO(String username, String password, String fullName, String mail, Long documentNumber,
+            String address) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.mail = mail;
+        this.documentNumber = documentNumber;
+        this.address = address;
+    }
+
+    public AccountDTO(Long id, String mail, String password, String username, String fullName, Long documentNumber, String address) {
         this.id = id;
         this.mail = mail;
         this.username = username;
@@ -48,6 +58,13 @@ public class AccountDTO {
     }
 
     
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getUsername() {
         return username;
     }
@@ -60,7 +77,7 @@ public class AccountDTO {
     public String getFullName() {
         return fullName;
     }
-    public Double getDocumentNumber() {
+    public Long getDocumentNumber() {
         return documentNumber;
     }
     public String getAddress() {
