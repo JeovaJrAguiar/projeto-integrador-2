@@ -32,8 +32,8 @@ public class CardController {
     return accountRepository.findById(id);
    }*/
 
-    @PostMapping()
+    /*@PostMapping()
     public ResponseEntity<ApiResponse> addCard(@RequestBody CardDTO cardDTO){
         
-    }
+    }*/
 }
