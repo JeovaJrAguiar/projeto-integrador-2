@@ -25,7 +25,6 @@ public class ApiResponse {
         this.message = message;
     }
 
-
     public void setSuccess(String message){
         this.status = 200;
         this.data = new Date();
@@ -58,8 +57,6 @@ public class ApiResponse {
             System.err.println("Erro ao serializar o JSON: " + e.getMessage());
         }
     }*/
-
-    
 
     public void setBadRequest(String message) {
         this.status = 400;
