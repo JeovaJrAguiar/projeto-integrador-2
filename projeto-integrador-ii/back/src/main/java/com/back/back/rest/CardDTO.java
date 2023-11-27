@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 public class CardDTO {
     private Long id;
     private Double cardNumber;
-    private Short flag;
+    private FlagEnum flag;
     private Double dayClose;
     private Boolean isDebit;
     private Boolean isCredit;
@@ -23,7 +23,7 @@ public class CardDTO {
             Double limit, Long account) {
         this.id = id;
         this.cardNumber = cardNumber;
-        this.flag = flag;
+        this.flag = FlagEnum.fromValue(flag);
         this.dayClose = dayClose;
         this.isDebit = isDebit;
         this.isCredit = isCredit;
@@ -57,10 +57,10 @@ public class CardDTO {
     public void setCardNumber(Double cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public Short getFlag() {
+    public FlagEnum getFlag() {
         return flag;
     }
-    public void setFlag(Short flag) {
+    public void setFlag(FlagEnum flag) {
         this.flag = flag;
     }
     public Double getDayClose() {

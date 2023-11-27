@@ -2,6 +2,7 @@ package com.back.back.model;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,9 +21,12 @@ public class Card {
     private Boolean isDebit;
     private Boolean isCredit;
     private Double creditLimit;
+    /*
     @ManyToOne
-    @JoinColumn(name = "cards")
-    private Account account;
+    @Column(name = "id")
+    private Account accountId;
+    */
+    private Long accountId;
     private Date creationDate;
     private Date deletionDate;
 
@@ -45,16 +49,16 @@ public class Card {
         this.account = account;
     }*/
 
-    public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double creditLimit, Account account) {
+    public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double creditLimit, Long accountId) {
         long millis = System.currentTimeMillis();  
-        Date creationDate =new java.sql.Date(millis);  
+        Date creationDate =new java.sql.Date(millis);
 
         this.flag = flag;
         this.dayClose = dayClose;
         this.isDebit = isDebit;
         this.isCredit = isCredit;
         this.creditLimit = creditLimit;
-        this.account = account;
+        this.accountId = accountId;
         this.creationDate = creationDate;
         this.deletionDate = null;
     }
@@ -109,15 +113,12 @@ public class Card {
         this.isDebit = isDebit;
     }
     
-    public Account getAccount() {
-        return this.account;
-    }
-    public Long getAccountId() {
-        return this.account.getId();
+    public Long getAccountId() {    
+        return this.accountId;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccount(Long accountId) {
+        this.accountId = accountId;
     }
     
     public Date getCreationDate() {

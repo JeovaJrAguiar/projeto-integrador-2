@@ -113,11 +113,8 @@ public class Account {
         return this.cards;
     }
     public void addCard(Card card) {
-        if (this.cards == null) {
-            cards = new ArrayList<>();
-        }
         this.cards.add(card);
-        card.setAccount(this);
+        card.setAccount(this.getId());
     }
     public void setCardsByListCards(List<Card> cards) {
         this.cards = cards;

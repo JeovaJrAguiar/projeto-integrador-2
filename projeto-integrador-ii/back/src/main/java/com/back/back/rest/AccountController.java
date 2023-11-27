@@ -84,7 +84,7 @@ public class AccountController {
             );
 
             accountRepository.save(account);
-            apiResponse.setSuccess(null);
+            apiResponse.setSuccess("Created with sucess.");
             return ResponseEntity.ok(apiResponse);
         }else {
             apiResponse.setBadRequest("Email already registered.");
