@@ -42,10 +42,7 @@ public class CardController {
     @PostMapping()
     public ResponseEntity<ApiResponse> addCard(@RequestBody CardDTO cardDTO){
         Optional<Card> cardOpt = cardRepository.findCardByNumber(cardDTO.getCardNumber());
-        Optional<Account> account = accountRepository.findById(cardDTO.getAccount());
         
-        List<Card> cardList = new ArrayList<>();
-        cardList.add(account.)
         ApiResponse apiResponse = new ApiResponse();
 
         if(cardOpt.isEmpty()){
@@ -59,7 +56,6 @@ public class CardController {
             );
 
             cardRepository.save(card);
-            accountRepository.updateCardsByAccountId(cardDTO.getAccount(), );
             apiResponse.setSuccess("Created with sucess.");
             return ResponseEntity.ok(apiResponse);
         }else {

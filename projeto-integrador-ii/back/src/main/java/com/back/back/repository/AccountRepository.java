@@ -24,11 +24,15 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
     @Query(value = "select * from account where mail = :mail", nativeQuery = true)
     Optional<Account> findAccountByMail(@Param("mail") String mail);
 
+    @Query(value = "select * from account where mail = :mail and password = :password", nativeQuery = true)
+    Optional<Account> findAccountByMailAndPassword(String mail, String password);
+    
+    /*
     @Modifying
     @Transactional
     @Query("update Account a set a.cards = :newCards WHERE a.id = :accountId")
     void updateCardsByAccountId(@Param("accountId") Long accountId, @Param("newCards") List<Card> newCards);
-    /*
+    
     @Query(value = "select * from user_account where mail != :mail", nativeQuery = true)
     ArrayList<UserAccount> findUsersExceptByMail(String mail);
 

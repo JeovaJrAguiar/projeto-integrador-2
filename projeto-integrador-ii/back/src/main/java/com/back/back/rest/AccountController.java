@@ -25,12 +25,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AccountController {
    @Autowired
    AccountRepository accountRepository;
-   ApiResponse apiResponse;
-   
+   ApiResponse apiResponse = new ApiResponse();
 
    @GetMapping("/{id}")
    Optional<Account> getAccountById(@PathVariable("id") Long id){
-    return accountRepository.findById(id);
+    return accountRepository.findById(id); 
+    //Optional<Account> accountOpt = accountRepository.findById(id);
+
+    /*if(accountOpt.isEmpty()){
+        apiResponse.setBadRequest("Email not found.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+    } else {
+        return accountOpt;
+    }*/
    }
 
     /*
@@ -67,11 +74,22 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
         }
    }*/
+   @GetMapping("/byMailAndPassword")
+   Optional<Account> getAccountByMailAndPassword(@RequestBody AccountDTO accountDTO){
+    return accountRepository.findAccountByMailAndPassword(accountDTO.getMail(), accountDTO.getPassword());
+   }
+
+   @GetMapping("/me")
+   Optional<Account> getUserByIdAndPassword(@PathVariable String me){
+        String credentials[] = new String[2];
+       credentials = me.split(":");
+       return accountRepository.findAccountByMailAndPassword(credentials[0], credentials[1]);
+   }
+
 
    @PostMapping()
    public ResponseEntity<ApiResponse> addAccount(@RequestBody AccountDTO accountDTO){
         Optional<Account> accountOpt = accountRepository.findAccountByMail(accountDTO.getMail());
-        ApiResponse apiResponse = new ApiResponse();
         
         if(accountOpt.isEmpty()){
             Account account = new Account(

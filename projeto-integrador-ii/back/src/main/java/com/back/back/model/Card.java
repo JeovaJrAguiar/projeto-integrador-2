@@ -21,11 +21,8 @@ public class Card {
     private Boolean isDebit;
     private Boolean isCredit;
     private Double creditLimit;
-    /*
-    @ManyToOne
-    @Column(name = "id")
-    private Account accountId;
-    */
+    /*@ManyToOne
+    @JoinColumn(name = "id")*/
     private Long accountId;
     private Date creationDate;
     private Date deletionDate;

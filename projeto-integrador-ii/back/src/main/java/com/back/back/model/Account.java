@@ -22,8 +22,8 @@ public class Account {
     private String fullName;
     private Long documentNumber;
     private String address;
-    @OneToMany(mappedBy = "account")
-    private List<Card> cards;
+    //@OneToMany(mappedBy = "account")
+    //private List<Card> cards;
     private Date creationDate;
     private Date deletionDate;
 
@@ -42,7 +42,7 @@ public class Account {
         this.fullName = fullName;
         this.documentNumber = documentNumber;
         this.address = address;
-        this.cards = null;
+        //this.cards = null;
         this.creationDate = creationDate;
         this.deletionDate = null;
     }
@@ -58,7 +58,7 @@ public class Account {
         this.fullName = fullName;
         this.documentNumber = documentNumber;
         this.address = address;
-        this.cards = cards;
+        //this.cards = cards;
         this.creationDate = creationDate;
         this.deletionDate = null;
     }
@@ -109,7 +109,7 @@ public class Account {
         this.address = address;
     }
 
-    public List<Card> getCards() {
+    /*public List<Card> getCards() {
         return this.cards;
     }
     public void addCard(Card card) {
@@ -118,7 +118,7 @@ public class Account {
     }
     public void setCardsByListCards(List<Card> cards) {
         this.cards = cards;
-    }
+    }*/
 
     public Date getCreationDate() {
         return this.creationDate;
