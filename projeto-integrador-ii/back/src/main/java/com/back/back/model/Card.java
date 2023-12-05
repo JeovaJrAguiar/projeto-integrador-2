@@ -46,10 +46,11 @@ public class Card {
         this.account = account;
     }*/
 
-    public Card(FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double creditLimit, Long accountId) {
+    public Card(Double cardNumber, FlagEnum flag, Double dayClose, Boolean isDebit, Boolean isCredit, Double creditLimit, Long accountId) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);
 
+        this.cardNumber = cardNumber;
         this.flag = flag;
         this.dayClose = dayClose;
         this.isDebit = isDebit;

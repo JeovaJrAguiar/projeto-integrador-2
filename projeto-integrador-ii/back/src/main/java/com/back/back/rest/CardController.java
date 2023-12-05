@@ -47,6 +47,7 @@ public class CardController {
 
         if(cardOpt.isEmpty()){
             Card card = new Card(
+                cardDTO.getCardNumber(),
                 cardDTO.getFlag(),
                 cardDTO.getDayClose(),
                 cardDTO.getIsDebit(),
@@ -56,7 +57,7 @@ public class CardController {
             );
 
             cardRepository.save(card);
-            apiResponse.setSuccess("Created with sucess.");
+            apiResponse.setSuccess("Created with sucess." + " Id: " + card.getId());
             return ResponseEntity.ok(apiResponse);
         }else {
             apiResponse.setBadRequest("Card number already registered.");

@@ -5,13 +5,16 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.back.back.model.Account;
@@ -26,6 +29,30 @@ public class AccountController {
    @Autowired
    AccountRepository accountRepository;
    ApiResponse apiResponse = new ApiResponse();
+
+   @GetMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String mail, @RequestHeader HttpHeaders headers){
+        String authorizationHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
+        
+        if (authorizationHeader != null && authorizationHeader.startsWith("Basic")) {
+            String credentials = authorizationHeader.substring("Basic ".length()).trim();
+            
+            String decodedCredentials = new String(java.util.Base64.getDecoder().decode(credentials));
+
+            String[] userAndPassword = decodedCredentials.split(":");
+            String mailFromHeader = userAndPassword[0];
+
+            // Agora você pode comparar o mail obtido do cabeçalho com o mail da solicitação
+            if (mail.equals(mailFromHeader)) {
+                // Autenticação bem-sucedida
+                return new ResponseEntity<>("Usuário autenticado com sucesso", HttpStatus.OK);
+            }
+        }
+
+        // Se as credenciais não corresponderem, retorne um erro de autenticação
+        return new ResponseEntity<>("Falha na autenticação", HttpStatus.UNAUTHORIZED);
+    }
+
 
    @GetMapping("/{id}")
    Optional<Account> getAccountById(@PathVariable("id") Long id){
@@ -109,4 +136,9 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
         }
    }
+
+   @GetMapping("/login/{mail}/{password}")
+    Optional<Account> getAccountById(@PathVariable("mail") String mail, @PathVariable("password") String password){
+        return accountRepository.findByMailAndPassword(mail, password);
+    }
 }

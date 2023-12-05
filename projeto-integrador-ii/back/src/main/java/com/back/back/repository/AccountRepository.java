@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.back.back.model.Account;
 import com.back.back.model.Card;
+import com.back.reponse.ApiResponse;
 
 import jakarta.transaction.Transactional;
 
@@ -26,6 +28,9 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 
     @Query(value = "select * from account where mail = :mail and password = :password", nativeQuery = true)
     Optional<Account> findAccountByMailAndPassword(String mail, String password);
+
+    @Query(value = "select * from account where mail = :mail and password = :password", nativeQuery = true)
+    Optional<Account> findByMailAndPassword(String mail, String password);
     
     /*
     @Modifying
