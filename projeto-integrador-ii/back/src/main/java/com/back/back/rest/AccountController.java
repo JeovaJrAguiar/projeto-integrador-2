@@ -23,6 +23,9 @@ import com.back.reponse.ApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Collections;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {
@@ -31,76 +34,39 @@ public class AccountController {
    ApiResponse apiResponse = new ApiResponse();
 
    @GetMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String mail, @RequestHeader HttpHeaders headers){
+    public ResponseEntity<Map<String, String>> login(@RequestHeader HttpHeaders headers){
         String authorizationHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
         
         if (authorizationHeader != null && authorizationHeader.startsWith("Basic")) {
             String credentials = authorizationHeader.substring("Basic ".length()).trim();
             
-            String decodedCredentials = new String(java.util.Base64.getDecoder().decode(credentials));
+            String decodedCredentials = new String(java.util.Base64.getUrlDecoder().decode(credentials));
 
             String[] userAndPassword = decodedCredentials.split(":");
             String mailFromHeader = userAndPassword[0];
+            String passwordFromHeader = userAndPassword[1];
 
-            // Agora você pode comparar o mail obtido do cabeçalho com o mail da solicitação
-            if (mail.equals(mailFromHeader)) {
-                // Autenticação bem-sucedida
-                return new ResponseEntity<>("Usuário autenticado com sucesso", HttpStatus.OK);
+            Optional<Account> optionalAccount = accountRepository.findByMailAndPassword(mailFromHeader, passwordFromHeader);
+            if (optionalAccount.isPresent()) {
+                Map<String, String> response = Collections.singletonMap("status", "success");
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
         }
 
-        // Se as credenciais não corresponderem, retorne um erro de autenticação
-        return new ResponseEntity<>("Falha na autenticação", HttpStatus.UNAUTHORIZED);
+        Map<String, String> response = Collections.singletonMap("status", "error");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
-
 
    @GetMapping("/{id}")
    Optional<Account> getAccountById(@PathVariable("id") Long id){
     return accountRepository.findById(id); 
-    //Optional<Account> accountOpt = accountRepository.findById(id);
-
-    /*if(accountOpt.isEmpty()){
-        apiResponse.setBadRequest("Email not found.");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
-    } else {
-        return accountOpt;
-    }*/
    }
 
-    /*
-   @GetMapping("/{id}")
-   public ResponseEntity<ApiResponse> getAccountById(@PathVariable("id") Long id){
-        Optional<Account> accountOpt = accountRepository.findById(id);
-        ApiResponse apiResponse = new ApiResponse();
+   @GetMapping("/user-info/{mail}")
+   Optional<Account> getAccountById(@PathVariable("mail") String mail){
+    return accountRepository.findByMail(mail); 
+   }
 
-        if(accountOpt.isPresent()){
-            Account account = accountOpt.get();
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> accountMap = new HashMap<>();
-
-            accountMap.put("id", account.getId());
-            accountMap.put("username", account.getUsername());
-            accountMap.put("mail", account.getMail());
-            accountMap.put("fullName", account.getFullName());
-            accountMap.put("documentNumber", account.getDocumentNumber());
-            accountMap.put("cards", account.getCards());
-            accountMap.put("creationDate", account.getCreationDate());
-            accountMap.put("deletionDate", account.getDeletionDate());
-
-            String accountJson;
-            try {
-                accountJson = objectMapper.writeValueAsString(accountMap);
-            } catch (JsonProcessingException e) {
-                apiResponse.setServerError("Error serializing Account object.");
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponse);
-            }
-            apiResponse.setSuccess(accountJson);
-            return ResponseEntity.ok(apiResponse);
-        }else {
-            apiResponse.setBadRequest("Id not found.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
-        }
-   }*/
    @GetMapping("/byMailAndPassword")
    Optional<Account> getAccountByMailAndPassword(@RequestBody AccountDTO accountDTO){
     return accountRepository.findAccountByMailAndPassword(accountDTO.getMail(), accountDTO.getPassword());
@@ -112,7 +78,6 @@ public class AccountController {
        credentials = me.split(":");
        return accountRepository.findAccountByMailAndPassword(credentials[0], credentials[1]);
    }
-
 
    @PostMapping()
    public ResponseEntity<ApiResponse> addAccount(@RequestBody AccountDTO accountDTO){
@@ -141,4 +106,10 @@ public class AccountController {
     Optional<Account> getAccountById(@PathVariable("mail") String mail, @PathVariable("password") String password){
         return accountRepository.findByMailAndPassword(mail, password);
     }
+
+    @GetMapping("/allInputs/{mail}")
+    Optional<Integer> getAllInputsByMail(@PathVariable("mail") String mail){
+        return accountRepository.findAllInputsByMail(mail);
+    }
+
 }

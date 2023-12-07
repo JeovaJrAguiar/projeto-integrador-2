@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Account } from '../../entities/account';
-import { tap } from 'rxjs';
+import { Account } from '../../entities/account.model';
+import { catchError, tap, throwError } from 'rxjs';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,24 @@ import { tap } from 'rxjs';
 export class LoginService {
   private API_USER_LOGIN: string = 'http://localhost:8080/api/account/login';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private localStorage: StorageService
+  ) { }
 
   login(mail: string, password:string) {
-    const httpOptions = {
-        headers: { Authorzation: "Basic " + btoa(mail + ':' + password) }
+    const headers = {
+      Authorization: 'Basic ' + btoa(mail + ':' + password)
     };
 
-    return this.http.get<Account>(this.API_USER_LOGIN + `/${mail}`).pipe(
-      tap((response: Account) => {
+    return this.http.get(this.API_USER_LOGIN, { headers, responseType: 'text' }).pipe(
+      tap(response => {
+        this.localStorage.set('authorization', btoa(mail + ':' + password));
         return response;
+      }),
+      catchError(error => {
+        console.error('Erro ao fazer login:', error);
+        return throwError(error);
       })
     );
   }

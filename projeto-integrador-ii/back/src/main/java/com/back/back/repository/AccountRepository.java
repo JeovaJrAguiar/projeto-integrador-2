@@ -31,6 +31,11 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 
     @Query(value = "select * from account where mail = :mail and password = :password", nativeQuery = true)
     Optional<Account> findByMailAndPassword(String mail, String password);
+
+    @Query(value = "select * from account where mail = :mail", nativeQuery = true)
+    Optional<Account> findByMail(String mail);
+
+    Optional<Integer> findAllInputsByMail(String mail);
     
     /*
     @Modifying

@@ -13,10 +13,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    @OneToOne
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
-    
+
     public Category() {
     }
 

@@ -15,25 +15,23 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double value;
-    private MethodEnum method;
+    private Short method;
     private String description;
-    @OneToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    private Long categoryId;
     private Long cardId;
     private Date creationDate;
     private Date deletionDate;
     
     public Transaction() {
     }
-    public Transaction(Double value, MethodEnum method, String description, Category category, Long cardId) {
+    public Transaction(Double value, Short method, String description, Long category, Long cardId) {
         long millis = System.currentTimeMillis();  
         Date creationDate =new java.sql.Date(millis);  
 
         this.value = value;
         this.method = method;
         this.description = description;
-        this.category = category;
+        this.categoryId = category;
         this.cardId = cardId;
         this.creationDate = creationDate;
         this.deletionDate = null;
@@ -47,10 +45,10 @@ public class Transaction {
     public void setValue(Double value) {
         this.value = value;
     }
-    public MethodEnum getMethod() {
+    public Short getMethod() {
         return method;
     }
-    public void setMethod(MethodEnum method) {
+    public void setMethod(Short method) {
         this.method = method;
     }
     
@@ -60,11 +58,11 @@ public class Transaction {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Category getCategory() {
-        return category;
+    public Long getCategory() {
+        return this.categoryId;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(Long category) {
+        this.categoryId = category;
     }
     
     public Long getCardId() {

@@ -15,5 +15,8 @@ public interface CategoryRepository extends CrudRepository<Category, Integer>{
     @Query(value = "select * from category", nativeQuery = true)
     Optional<Category> findAllCategories();
 
+    @Query(value = "select * from category where description = :description ", nativeQuery = true)
+    Optional<Category> findAccountBydescription(String description);
+
     
 }
