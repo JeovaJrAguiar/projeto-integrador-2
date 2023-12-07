@@ -30,6 +30,11 @@ public class TransactionController {
         return transactionRepostiory.findById(id);
     }
 
+    @GetMapping("/allTransactions/{cardID}")
+    Optional<Transaction> getTransactionsByCardId(@PathVariable("cardID") Long cardID){
+        return transactionRepostiory.findTransactionsById(cardID);
+    }
+
     @GetMapping("/allTransaction/inputs/{cardId}")
     Long getTransactionsInputsByCardId(@PathVariable Long cardId){
         return transactionRepostiory.sumAllInputsByMail(cardId);

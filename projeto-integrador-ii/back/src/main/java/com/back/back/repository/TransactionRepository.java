@@ -25,6 +25,8 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
     @Query(value = "select SUM(value) from transaction WHERE card_id = :cardId and category_id = 2", nativeQuery = true)
     Long sumAllOutputsByMail(@Param("cardId") Long cardId);
 
+Optional<Transaction> findTransactionsById(Long cardID);
+
     /*@Query("SELECT COALESCE(SUM(t.value), 0) FROM Transaction t " +
            "JOIN t.card c " +
            "JOIN c.account a " +
